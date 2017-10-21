@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { injectIntl, FormattedMessage } from 'react-intl';  
@@ -40,18 +40,20 @@ export class PostDetailPage extends Component {
   
   render() {
     const {props} = this;
-    return(<div>
-      <Helmet title={props.post.title} />
-      <div className={`${styles['single-post']} ${styles['post-detail']}`}>
-        <h3 className={styles['post-title']}>{props.post.title}</h3>
-        <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.name}</p>
-        <p className={styles['post-desc']}>{props.post.content}</p>
+    return(
+      <div>
+        <Helmet title={props.post.title} />
+        <a className={styles['edit-post-button']} href="#" onClick={this.props.toggleEditPost}><FormattedMessage id="editPost" /></a>
+        {
+          this.props.showEditPost
+            ? this.renderPostForm()
+            : this.renderPost()
+        }     
       </div>
-    </div>
     );
  }
-}
-renderPostForm = () => {
+
+ renderPostForm = () => {
   return (
     <div className={styles['form-content']}>
       <h2 className={styles['form-title']}><FormattedMessage id="editPost" /></h2>
@@ -71,19 +73,6 @@ renderPost = () => {
     </div>
   );
 };
-
-render() {
-  return (
-    <div>
-      <Helmet title={this.props.post.title} />
-      <a className={styles['edit-post-button']} href="#" onClick={this.props.toggleEditPost}><FormattedMessage id="editPost" /></a>
-      {
-        this.props.showEditPost
-          ? this.renderPostForm()
-          : this.renderPost()
-      }
-    </div>
-  );
 }
 
 // Actions required to provide data for this component to render in sever side.
@@ -99,6 +88,7 @@ function mapStateToProps(state, props) {
 }
 
 function mapStateToProps(state, props) {
+
   return {
     post: getPost(state, props.params.cuid),
     showEditPost: getShowEditPost(state)
