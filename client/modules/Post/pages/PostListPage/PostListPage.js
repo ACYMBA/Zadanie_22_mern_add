@@ -6,7 +6,7 @@ import PostList from '../../components/PostList';
 import PostCreateWidget from '../../components/PostCreateWidget/PostCreateWidget';
 
 // Import Actions
-import { addPostRequest, fetchPosts, deletePostRequest } from '../../PostActions';
+import { addPostRequest, fetchPosts, deletePostRequest, thumbUpPostRequest, thumbDownPostRequest } from '../../PostActions';
 import { toggleAddPost } from '../../../App/AppActions';
 
 // Import Selectors
@@ -16,24 +16,39 @@ import { getPosts } from '../../PostReducer';
 class PostListPage extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
+
+    this.handleThumbUp = this.handleThumbUp.bind(this);
+    this.handleThumbDown = this.handleThumbDown.bind(this);
   }
 
   handleDeletePost = post => {
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
       this.props.dispatch(deletePostRequest(post));
     }
-  };
+  }
+
+  handleThumbUp(postCuid) {
+    this.props.dispatch(thumbUpPostRequest(postCuid));
+  }
+
+  handleThumbDown(postCuid) {
+    this.props.dispatch(thumbDownPostRequest(postCuid));
+  }
 
   handleAddPost = (name, title, content) => {
     this.props.dispatch(toggleAddPost());
     this.props.dispatch(addPostRequest({ name, title, content }));
-  };
+  }
 
   render() {
     return (
       <div>
         <PostCreateWidget addPost={this.handleAddPost} showAddPost={this.props.showAddPost} />
-        <PostList handleDeletePost={this.handleDeletePost} posts={this.props.posts} />
+        <PostList 
+          handleDeletePost={this.handleDeletePost} 
+          handleThumbUp={this.handleThumbUp}
+          handleThumbDown={this.handleThumbDown}
+          posts={this.props.posts} />
       </div>
     );
   }

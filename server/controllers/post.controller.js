@@ -87,3 +87,23 @@ export function editPost(req, res) {
     res.json({ post });
   });
 }
+
+export function voteUp(req, res) {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, { $inc : {'voteCount' : 1} }).exec((err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    
+    res.json({ post }); 
+  });
+}
+
+export function voteDown(req, res) {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, { $inc : {'voteCount' : -1} }).exec((err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    
+    res.json({ post }); 
+  });
+}
