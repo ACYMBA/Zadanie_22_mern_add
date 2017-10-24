@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import PostListPage from '../pages/PostListPage/PostListPage.js';
 
 // Import Components
 import PostListItem from './PostListItem/PostListItem';
@@ -30,6 +31,9 @@ PostList.propTypes = {
     cuid: PropTypes.string.isRequired,
   })).isRequired,
   handleDeletePost: PropTypes.func.isRequired,
+  handleThumbUpPost: PropTypes.func.isRequired,
+  handleThumbDownPost: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default PostList;
