@@ -20,4 +20,6 @@ router.route('/posts/:cuid').put(PostController.editPost);
 router.route('/posts/:cuid/voteUp').put(PostController.voteUp);
 router.route('/posts/:cuid/voteDown').put(PostController.voteDown);
 
+
 export default router;
+

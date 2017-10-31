@@ -23,6 +23,7 @@ function PostListItem(props) {
       <p className={styles['post-action']}><a href="#" onClick={props.onThumbUp}><FormattedMessage id="thumbUpPost" /></a> {''} <span>{props.post.thumbUpCount}</span></p>
       <p className={styles['post-action']}><a href="#" onClick={props.onThumbDown}><FormattedMessage id="thumbDownPost" /></a>{''} <span>{props.post.thumbDownCount}</span></p>
       
+
       <hr className={styles.divider} />
     </div>
   );
